@@ -8,6 +8,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +34,7 @@ public class ReviewGUI {
 	private JButton connectButton;
 	private JLabel connectionLabel;
 	private JButton disconnectButton;
+	private JButton printButton;
 	private JScrollPane jTableReviews;
 
 	private Socket socket;
@@ -95,6 +97,16 @@ public class ReviewGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeConnection();
+			}
+		});
+		printButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					jTable1.print(JTable.PrintMode.FIT_WIDTH, null, null);
+				} catch (PrinterException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 	}
