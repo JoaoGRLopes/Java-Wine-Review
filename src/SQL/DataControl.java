@@ -11,18 +11,22 @@ import java.util.List;
 
 
 public class DataControl {
-
+    //getting wine fromSQL
     public static String[][] getWine() {
 
         try {
+
+            //connects to SQL
             Connection connection = ConnectDB.get();
             Statement statement = connection.createStatement();
 
+            //Creates a result set
             ResultSet resultSet;
 
+            //selects the required components  from SQL
             resultSet = statement.executeQuery("select wine_id, title , description , country , designation , country , variety from Wines where active = 1");
-            List<String[]> result = new ArrayList<>();
 
+            List<String[]> result = new ArrayList<>(); //List of strings in order to get its components until there are no more left
             while (resultSet.next()) {
                 String[] row = new String[]{resultSet.getString("wine_id"),
                         resultSet.getString("title"),
@@ -39,6 +43,8 @@ public class DataControl {
             throw new RuntimeException(e);
         }
     }
+
+    //gets the reviews from SQL
     public static String[][] getReviews(int wine_id) {
 
         try {
@@ -65,6 +71,7 @@ public class DataControl {
         }
     }
 
+    //Adds reviews from SQL
     public static void addReview(String customerName , String review , Integer wine_id) {
         try {
             Connection connection = ConnectDB.get();
@@ -81,6 +88,7 @@ public class DataControl {
         }
     }
 
+    //Soft deletes wines, meaning that is disables the wine from table
     public static void softDeleteWine(Integer id) {
         try {
             Connection connection = ConnectDB.get();

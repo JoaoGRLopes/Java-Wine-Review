@@ -57,13 +57,13 @@ public class ReviewGUI {
 		listWines();
 		listReviews(null);
 
-		submitButton.addActionListener(new ActionListener() {
+		submitButton.addActionListener(new ActionListener() { //adds the review to the wine
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(wine_id == null) {
+				if(wine_id == null) { 				//checking if wine is not null
 					JOptionPane.showMessageDialog(jTable2 , "Choose Wine first !");
 				}else {
-					DataControl.addReview(customerNameTxtField.getText(), wineReviewTxtArea.getText(), wine_id);
+					DataControl.addReview(customerNameTxtField.getText(), wineReviewTxtArea.getText(), wine_id);	//adds review from inputted texts
 
 					listReviews(DataControl.getReviews(wine_id));
 					customerNameTxtField.setText(null);
@@ -76,7 +76,7 @@ public class ReviewGUI {
 
 		});
 
-		clearButton.addActionListener(new ActionListener() {
+		clearButton.addActionListener(new ActionListener() { //clears text fields
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				wineNameTxtField.setText("");
@@ -85,13 +85,13 @@ public class ReviewGUI {
 			}
 		});
 
-		connectButton.addActionListener(new ActionListener() {
+		connectButton.addActionListener(new ActionListener() { //connects to server by calling reconnect class
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				reconnectToServer();
 			}
 		});
-		disconnectButton.addActionListener(new ActionListener() {
+		disconnectButton.addActionListener(new ActionListener() {  //disconnects from server by calling close connection class
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeConnection();
@@ -126,6 +126,7 @@ public class ReviewGUI {
 		}
 	}
 
+	//creates a button in the table for getting the reviews with getTableCellRendererComponent
 	class ButtonRenderer extends JButton implements TableCellRenderer {
 		public ButtonRenderer() {
 			setOpaque(true);
@@ -136,31 +137,35 @@ public class ReviewGUI {
 			return this;
 		}
 	}
+
+	//get review button action editor component
 	class ButtonEditor extends DefaultCellEditor {
 		private String label;
 
-		public ButtonEditor(JCheckBox checkBox) {
+		public ButtonEditor(JCheckBox checkBox) { //sets button editor class with check box
 			super(checkBox);
 		}
 
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) { //component class to change button in table
 			label = (value == null) ? "Get Reviews" : value.toString();
 			jButton.setText(label);
-			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString());
+			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString()); //gets wine id from table row and convert to string, and later to int
 
-			String wineName = table.getValueAt(row, 1).toString();
+			String wineName = table.getValueAt(row, 1).toString(); //gets name from wine and convert to string
 
-			reviewsList.setText("Review List : " + wineName);
+			reviewsList.setText("Review List : " + wineName); //setts review list text
 
-			listReviews(DataControl.getReviews(Integer.parseInt(table.getValueAt(row, 0).toString())));
+			listReviews(DataControl.getReviews(Integer.parseInt(table.getValueAt(row, 0).toString()))); //displayes reviews
 			wineNameTxtField.setText(wineName);
 			return jButton;
 		}
 
 		public Object getCellEditorValue() {
 			return new String(label);
-		}
+		} //gets new tabled edited value to label
 	}
+
+	//creates a button in the table for deleting the reviews
 	class ButtonRenderer2 extends JButton implements TableCellRenderer {
 		public ButtonRenderer2() {
 			setOpaque(true);
@@ -171,6 +176,8 @@ public class ReviewGUI {
 			return this;
 		}
 	}
+
+	//delete button action editor
 	class ButtonEditor2 extends DefaultCellEditor {
 		private String label;
 
@@ -178,8 +185,7 @@ public class ReviewGUI {
 			super(checkBox);
 		}
 
-		public Component getTableCellEditorComponent(JTable table, Object value,
-													 boolean isSelected, int row, int column) {
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) { //component class to change button in table similar with button 1
 			label = (value == null) ? "Delete" : value.toString();
 			jButton.setText(label);
 			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString());
@@ -195,6 +201,7 @@ public class ReviewGUI {
 		}
 	}
 
+	//lists reviews and sets them on the table 2
 	private void listReviews(String[][] data) {
 		String[] columnNames = {"Wine Name", "Customer Name", "Review"};
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, columnNames);
@@ -202,7 +209,7 @@ public class ReviewGUI {
 		jTable2.setModel(defaultTableModel);
 		jTable2.revalidate();
 	}
-
+	//lists wines and components and sets them on the table 1
 	private void listWines() {
 		String[] columnNames = {"Id", "Name", "Variety", "Description", "Designation", "Country", ACTION ,"Delete"};
 		DefaultTableModel defaultTableModel = new DefaultTableModel(DataControl.getWine(), columnNames);
