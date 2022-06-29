@@ -85,6 +85,45 @@ public class ReviewGUI {
 			}
 		});
 
+		connectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reconnectToServer();
+			}
+		});
+		disconnectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeConnection();
+			}
+		});
+	}
+	//reconnecting to server
+	private void reconnectToServer () {
+		closeConnection();
+		connectionLabel.setText("Attempting to connect to server");
+		try {
+			socket = new Socket("127.0.0.1", 2000);
+			printWriter = new PrintWriter(socket.getOutputStream(), true);
+			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			connectionLabel.setText("Connected to server!");
+		} catch (IOException ex) {
+			Logger.getLogger(ReviewGUI.class.getName()).log(Level.SEVERE, null, ex);
+			connectionLabel.setText("Connection Failed"); // connection failed
+		}
+	}
+	//closing connetion to server
+	private void closeConnection () {
+		if (socket != null) {
+			connectionLabel.setText("Connection Lost!");
+			try {
+				socket.close();
+			} catch (IOException ex) {
+				Logger.getLogger(ReviewGUI.class.getName()).log(Level.SEVERE, null, ex);
+			} finally {
+				socket = null;
+			}
+		}
 	}
 
 	class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -97,7 +136,6 @@ public class ReviewGUI {
 			return this;
 		}
 	}
-
 	class ButtonEditor extends DefaultCellEditor {
 		private String label;
 
@@ -123,7 +161,6 @@ public class ReviewGUI {
 			return new String(label);
 		}
 	}
-
 	class ButtonRenderer2 extends JButton implements TableCellRenderer {
 		public ButtonRenderer2() {
 			setOpaque(true);
