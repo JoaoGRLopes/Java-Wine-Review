@@ -66,6 +66,15 @@ public class ReviewGUI {
 
 		});
 
+		clearButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wineNameTxtField.setText("");
+				customerNameTxtField.setText("");
+				wineReviewTxtArea.setText("");
+			}
+		});
+
 	}
 
 	class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -126,7 +135,7 @@ public class ReviewGUI {
 			jButton.setText(label);
 			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString());
 
-
+			DataControl.softDeleteWine(wine_id);
 			listWines();
 			JOptionPane.showMessageDialog(jTable2 , "Success delete wine");
 			return jButton;

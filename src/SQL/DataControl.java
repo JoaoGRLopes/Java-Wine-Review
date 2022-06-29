@@ -84,5 +84,21 @@ public class DataControl {
         }
     }
 
+    public static void softDeleteWine(Integer id) {
+        try {
+            Connection connection = ConnectDB.get();
+            Statement statement = connection.createStatement();
+
+            String delete = "UPDATE Wines set active = 0 where wine_id = '"+id+"' ";
+
+            statement.execute(delete);
+
+            statement.close();
+            connection.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
     }
