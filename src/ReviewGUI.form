@@ -50,7 +50,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="3c699" class="javax.swing.JLabel" binding="barberLabel">
+              <component id="3c699" class="javax.swing.JLabel" binding="wineReviewLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="2" use-parent-layout="false">
                     <preferred-size width="160" height="15"/>
@@ -63,15 +63,6 @@
                 </properties>
               </component>
             </children>
-          </grid>
-          <grid id="15e77" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="10" left="0" bottom="10" right="0"/>
-            <constraints>
-              <grid row="9" column="35" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="24" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
           </grid>
           <scrollpane id="64230" binding="jScrollPane">
             <constraints>

@@ -8,12 +8,19 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReviewGUI {
 	public static final String ACTION = "Action";
 	private JPanel panel;
 	private JLabel wineNameLabel;
-	private JLabel barberLabel;
+	private JLabel wineReviewLabel;
 	private JButton submitButton;
 	private JScrollPane jScrollPane;
 	private JTable jTable1;
@@ -28,6 +35,9 @@ public class ReviewGUI {
 	private JButton disconnectButton;
 	private JScrollPane jTableReviews;
 
+	private Socket socket;
+	private PrintWriter printWriter;
+	private BufferedReader bufferedReader;
 
 	private Integer wine_id;
 
@@ -104,6 +114,7 @@ public class ReviewGUI {
 
 			reviewsList.setText("Review List : " + wineName);
 
+			listReviews(DataControl.getReviews(Integer.parseInt(table.getValueAt(row, 0).toString())));
 			wineNameTxtField.setText(wineName);
 			return jButton;
 		}
@@ -130,7 +141,8 @@ public class ReviewGUI {
 			super(checkBox);
 		}
 
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+		public Component getTableCellEditorComponent(JTable table, Object value,
+													 boolean isSelected, int row, int column) {
 			label = (value == null) ? "Delete" : value.toString();
 			jButton.setText(label);
 			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString());
