@@ -82,6 +82,48 @@ public class ReviewGUI {
 			return new String(label);
 		}
 	}
+
+	class ButtonRenderer2 extends JButton implements TableCellRenderer {
+		public ButtonRenderer2() {
+			setOpaque(true);
+		}
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+			setText((value == null) ? "Delete" : value.toString());
+			return this;
+		}
+	}
+	class ButtonEditor2 extends DefaultCellEditor {
+		private String label;
+
+		public ButtonEditor2(JCheckBox checkBox) {
+			super(checkBox);
+		}
+
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+			label = (value == null) ? "Delete" : value.toString();
+			jButton.setText(label);
+			wine_id = Integer.parseInt(table.getValueAt(row, 0).toString());
+
+
+			listWines();
+			JOptionPane.showMessageDialog(jTable2 , "Success delete wine");
+			return jButton;
+		}
+
+		public Object getCellEditorValue() {
+			return new String(label);
+		}
+	}
+
+	private void listReviews(String[][] data) {
+		String[] columnNames = {"Wine Name", "Customer Name", "Review"};
+		DefaultTableModel defaultTableModel = new DefaultTableModel(data, columnNames);
+
+		jTable2.setModel(defaultTableModel);
+		jTable2.revalidate();
+	}
+
 	private void listWines() {
 		String[] columnNames = {"Id", "Name", "Variety", "Description", "Designation", "Country", ACTION ,"Delete"};
 		DefaultTableModel defaultTableModel = new DefaultTableModel(DataControl.getWine(), columnNames);
@@ -90,7 +132,8 @@ public class ReviewGUI {
 		jTable1.getAutoCreateRowSorter();
 		jTable1.getColumn(ACTION).setCellRenderer(new ButtonRenderer());
 		jTable1.getColumn(ACTION).setCellEditor(new ButtonEditor(new JCheckBox()));
-
+		jTable1.getColumn("Delete").setCellRenderer(new ButtonRenderer2());
+		jTable1.getColumn("Delete").setCellEditor(new ButtonEditor2(new JCheckBox()));
 	}
 
 }

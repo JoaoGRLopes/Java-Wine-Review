@@ -1,5 +1,8 @@
 package src.SQL;
 
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,4 +46,5 @@ public class DataControl {
 
 
 
-}
+        }
+    }
