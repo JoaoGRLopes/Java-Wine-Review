@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReviewGUI {
 	public static final String ACTION = "Action";
@@ -43,7 +45,26 @@ public class ReviewGUI {
 	public ReviewGUI() {
 
 		listWines();
+		listReviews(null);
 
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(wine_id == null) {
+					JOptionPane.showMessageDialog(jTable2 , "Choose Wine first !");
+				}else {
+					DataControl.addReview(customerNameTxtField.getText(), wineReviewTxtArea.getText(), wine_id);
+
+					listReviews(DataControl.getReviews(wine_id));
+					customerNameTxtField.setText(null);
+					wineReviewTxtArea.setText(null);
+
+					JOptionPane.showMessageDialog(jTable2 , "Success add review");
+				}
+
+			}
+
+		});
 
 	}
 
