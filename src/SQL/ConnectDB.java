@@ -11,7 +11,7 @@ public class ConnectDB {
 		try {
 			Class.forName("org.sqlite.JDBC");
 
-			connection = DriverManager.getConnection("jdbc:sqlite:wine-data-small.sqlite");
+			connection = DriverManager.getConnection("jdbc:sqlite:src/wineDataBase/wine-data-small.sqlite");
 
 			System.out.println("Connection Established");
 		} catch (Exception e) {
@@ -22,7 +22,6 @@ public class ConnectDB {
 		return connection;
 	}
 
-	public static void main(String[] args) {
-		get();
+	public static void main(String[] args) {get();
 	}
 }
