@@ -127,6 +127,7 @@ public class ReviewGUI {
 	//closing connetion to server
 	private void closeConnection () {
 		if (socket != null) {
+
 			connectionLabel.setText("Connection Lost!");
 			try {
 				socket.close();
